@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../core/errors/failures.dart';
-import '../entities/weather.dart';
-import '../entities/forecast.dart';
-import '../entities/location.dart';
+import '../../core/errors/exceptions.dart';
+import '../../domain/entities/forecast.dart';
+import '../../domain/entities/location.dart';
+import '../../domain/entities/weather.dart';
 
 // Repository interface defines all data operations
 // Uses Either type for error handling (Left = Failure, Right = Success)

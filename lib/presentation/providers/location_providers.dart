@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data/repositories/weather_repository.dart';
 import '../../domain/entities/location.dart';
-import '../../domain/repositories/weather_repository.dart';
 import 'service_providers.dart';
 
 // StateNotifier for managing saved locations list

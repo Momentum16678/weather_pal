@@ -1,12 +1,11 @@
 // lib/src/data/repositories/weather_repository_impl.dart
 import 'package:dartz/dartz.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_forecast_app/data/repositories/weather_repository.dart';
 import '../../core/errors/exceptions.dart';
-import '../../core/errors/failures.dart';
 import '../../domain/entities/weather.dart';
 import '../../domain/entities/forecast.dart';
 import '../../domain/entities/location.dart';
-import '../../domain/repositories/weather_repository.dart';
 import '../services/weather_api_service.dart';
 import '../services/location_service.dart';
 import '../services/local_storage_service.dart';

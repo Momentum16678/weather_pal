@@ -75,7 +75,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
           Expanded(
             child: searchQuery.isEmpty
                 ? _buildSuggestions()
-                : _buildSearchResults(),
+                : _buildSearchResults(searchQuery),
           ),
         ],
       ),
@@ -115,7 +115,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   }
 
   // Show search results
-  Widget _buildSearchResults() {
+  Widget _buildSearchResults(String searchQuery) {
     final weatherAsync = ref.watch(weatherByCityNameProvider(searchQuery));
 
     return weatherAsync.when(

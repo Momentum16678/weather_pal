@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/services/weather_api_service.dart';
+import '../../data/repositories/weather_repository.dart';
 import '../../data/services/location_service.dart';
 import '../../data/services/local_storage_service.dart';
 import '../../data/repositories/weather_repository_impl.dart';
-import '../../domain/repositories/weather_repository.dart';
+import '../../data/services/weather_api_service.dart';
 
 // These providers create and manage service instances
 // They handle dependency injection throughout the app
