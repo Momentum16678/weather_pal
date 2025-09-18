@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../core/errors/exceptions.dart';
+import '../../core/errors/failures.dart';
 import '../../domain/entities/forecast.dart';
 import '../../domain/entities/location.dart';
 import '../../domain/entities/weather.dart';

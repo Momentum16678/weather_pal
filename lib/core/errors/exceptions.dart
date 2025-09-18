@@ -14,22 +14,3 @@ class LocationException implements Exception {
   final String message;
   LocationException(this.message);
 }
-
-// lib/src/core/errors/failures.dart
-// Failures returned by repositories (clean architecture pattern)
-abstract class Failure {
-  final String message;
-  const Failure(this.message);
-}
-
-class ServerFailure extends Failure {
-  const ServerFailure(super.message);
-}
-
-class CacheFailure extends Failure {
-  const CacheFailure(super.message);
-}
-
-class LocationFailure extends Failure {
-  const LocationFailure(super.message);
-}
