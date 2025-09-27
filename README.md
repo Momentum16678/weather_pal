@@ -10,10 +10,10 @@ A beautiful, intuitive weather application built with Flutter that delivers accu
 - ✅ Offline support
 
 ## 📸 Screenshots
-![screen1.jpg](../Downloads/screen1.jpg)
-![screen2.jpg](../Downloads/screen2.jpg)
-![screen3.jpg](../Downloads/screen3.jpg)
-![screen4.jpg](../Downloads/screen4.jpg)
+![screen1.jpg](screenshots/screen1.jpg)
+![screen2.jpg](screenshots/screen2.jpg)
+![screen3.jpg](screenshots/screen3.jpg)
+![screen4.jpg](screenshots/screen4.jpg)
 
 ## 🏗️ Architecture
 This app uses Clean Architecture with:
