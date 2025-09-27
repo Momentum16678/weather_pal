@@ -35,8 +35,7 @@ class LocalStorageService {
       final prefs = await SharedPreferences.getInstance();
       final locationStrings = prefs.getStringList(AppConstants.storageKey) ?? [];
 
-      // Convert JSON strings back to Location objects
-      return locationStrings.map((string) {
+      final locations = locationStrings.map((string) {
         final json = jsonDecode(string);
         return Location(
           id: json['id'],
@@ -49,6 +48,12 @@ class LocalStorageService {
               : null,
         );
       }).toList();
+
+      // Filter out invalid coordinates (0,0)
+      return locations.where((location) =>
+      location.latitude != 0.0 && location.longitude != 0.0
+      ).toList();
+
     } catch (e) {
       throw CacheException('Failed to get locations');
     }

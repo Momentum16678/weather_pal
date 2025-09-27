@@ -7,38 +7,47 @@ import '../../core/errors/exceptions.dart';
 class LocationService {
   // Get current GPS position
   Future<Position> getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+    print("🔍 Starting location check...");
 
     // Check if location services are enabled
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    print("📍 Location services enabled: $serviceEnabled");
+
     if (!serviceEnabled) {
-      throw LocationException('Location services are disabled');
+      print("❌ Location services are disabled");
+      throw LocationException('Location services are disabled. Please enable location in your device settings.');
     }
 
-    // Check permission status
-    permission = await Geolocator.checkPermission();
+    // Check permissions
+    LocationPermission permission = await Geolocator.checkPermission();
+    print("🔐 Current permission: $permission");
+
     if (permission == LocationPermission.denied) {
+      print("🔐 Requesting location permission...");
       permission = await Geolocator.requestPermission();
+      print("🔐 Permission after request: $permission");
+
       if (permission == LocationPermission.denied) {
-        throw LocationException('Location permissions are denied');
+        throw LocationException('Location permissions are denied. Please grant location access in app settings.');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw LocationException(
-        'Location permissions are permanently denied',
-      );
+      throw LocationException('Location permissions are permanently denied. Please go to app settings and enable location access.');
     }
 
-    // Get current position
+    // Get position
     try {
-      return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-        timeLimit: const Duration(seconds: 10),
+      print("📍 Getting current position...");
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium,
+        timeLimit: const Duration(seconds: 30), // Increased timeout
       );
+      print("✅ Position obtained: ${position.latitude}, ${position.longitude}");
+      return position;
     } catch (e) {
-      throw LocationException('Failed to get current location');
+      print("❌ Failed to get position: $e");
+      throw LocationException('Failed to get current location: ${e.toString()}');
     }
   }
 

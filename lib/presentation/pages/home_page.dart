@@ -21,7 +21,16 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     // Watch providers to react to changes
+    // For testing, use hardcoded location if GPS fails
     final currentLocationWeather = ref.watch(currentLocationWeatherProvider);
+    final fallbackLocationWeather = ref.watch(currentWeatherProvider(Location(
+      id: 'fallback',
+      cityName: 'London',
+      country: 'GB',
+      latitude: 51.5074,
+      longitude: -0.1278,
+    )));
+
     final savedLocations = ref.watch(savedLocationsProvider);
     final themeMode = ref.watch(themeModeProvider);
 
@@ -90,7 +99,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Location indicator
                       Row(
                         children: [
                           Icon(
@@ -114,10 +122,50 @@ class _HomePageState extends ConsumerState<HomePage> {
               loading: () => const SliverToBoxAdapter(
                 child: LoadingWidget(height: 200),
               ),
-              error: (error, stack) => SliverToBoxAdapter(
-                child: ErrorDisplay(
-                  message: error.toString(),
-                  onRetry: () => ref.invalidate(currentLocationWeatherProvider),
+              error: (error, stack) => fallbackLocationWeather.when(
+                data: (weather) => SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_off,
+                              size: 20,
+                              color: Colors.orange,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              "London (Default)",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        WeatherDisplay(weather: weather),
+                      ],
+                    ),
+                  ),
+                ),
+                loading: () => const SliverToBoxAdapter(
+                  child: LoadingWidget(height: 200),
+                ),
+                error: (fallbackError, fallbackStack) => SliverToBoxAdapter(
+                  child: ErrorDisplay(
+                    message: 'Failed to load weather data',
+                    onRetry: () {
+                      ref.invalidate(currentLocationWeatherProvider);
+                      ref.invalidate(currentWeatherProvider(Location(
+                        id: 'fallback',
+                        cityName: 'London',
+                        country: 'GB',
+                        latitude: 51.5074,
+                        longitude: -0.1278,
+                      )));
+                    },
+                  ),
                 ),
               ),
             ),
@@ -176,15 +224,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                 );
               },
               loading: () => const SliverToBoxAdapter(
-                child: LoadingWidget(height: 100),
+                child: SizedBox.shrink(), // Don't show loading for saved locations initially
               ),
-              error: (error, stack) => SliverToBoxAdapter(
-                child: ErrorDisplay(
-                  message: 'Failed to load saved locations',
-                  onRetry: () => ref
-                      .read(savedLocationsProvider.notifier)
-                      .loadLocations(),
-                ),
+              error: (error, stack) => const SliverToBoxAdapter(
+                child: SizedBox.shrink(), // Hide error when no saved locations
               ),
             ),
           ],

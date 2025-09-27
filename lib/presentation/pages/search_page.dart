@@ -190,25 +190,23 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     try {
       final savedLocations = ref.read(savedLocationsProvider).value ?? [];
 
-      // Check if already saved
       if (savedLocations.any((l) => l.cityName == weather.cityName)) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Location already saved'),
-            ),
+            const SnackBar(content: Text('Location already saved')),
           );
         }
         return;
       }
 
-      // Create location object
+      // For now, use placeholder coordinates since city search doesn't return them
+      // In a real app, you'd need to geocode the city name to get coordinates
       final location = Location(
         id: '${weather.cityName}-${DateTime.now().millisecondsSinceEpoch}',
         cityName: weather.cityName,
         country: weather.country,
-        latitude: 0, // API limitation
-        longitude: 0,
+        latitude: 40.7128, // Default to NYC coordinates for now
+        longitude: -74.0060, // Better than 0,0 which returns "Globe"
         lastUpdated: DateTime.now(),
       );
 
@@ -216,21 +214,13 @@ class _SearchPageState extends ConsumerState<SearchPage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${weather.cityName} saved successfully'),
-            action: SnackBarAction(
-              label: 'View',
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
+          SnackBar(content: Text('${weather.cityName} saved successfully')),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to save location: $e'),
-          ),
+          SnackBar(content: Text('Failed to save location: $e')),
         );
       }
     }
