@@ -10,20 +10,15 @@ A beautiful, intuitive weather application built with Flutter that delivers accu
 - ✅ Offline support
 
 ## 📸 Screenshots
-<img src="screenshots/screen1.jpg" width="300" alt="Home Screen" height="600">
 
 <table>
   <tr>
-    <td><img src="screenshots/screen1.jpg" width="300" alt="Home Screen" height="600"></td>
-    <td><img src="screenshots/screen1.jpg" width="300" alt="Home Screen" height="600"></td>
-    <td><img src="screenshots/screen1.jpg" width="300" alt="Home Screen" height="600"></td>
+    <td><img src="screenshots/screen1.jpg" width="250" alt="Home Screen" height="450"></td>
+    <td><img src="screenshots/screen2.jpg" width="250" alt="Home Screen" height="450"></td>
+    <td><img src="screenshots/screen3.jpg" width="250" alt="Home Screen" height="450"></td>
+    <td><img src="screenshots/screen4.jpg" width="250" alt="Home Screen" height="450"></td>
   </tr>
 </table>
-
-![screen1.jpg](screenshots/screen1.jpg)
-![screen2.jpg](screenshots/screen2.jpg)
-![screen3.jpg](screenshots/screen3.jpg)
-![screen4.jpg](screenshots/screen4.jpg)
 
 ## 🏗️ Architecture
 This app uses Clean Architecture with:
