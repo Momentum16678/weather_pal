@@ -55,12 +55,12 @@ class DetailedWeatherPage extends ConsumerWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 40),
+                         // const SizedBox(height: 15),
                           // Large temperature display
                           Text(
                             '${weather.temperature.round()}°',
                             style: const TextStyle(
-                              fontSize: 64,
+                              fontSize: 60,
                               fontWeight: FontWeight.w200,
                               color: Colors.white,
                             ),

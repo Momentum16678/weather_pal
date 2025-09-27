@@ -143,8 +143,8 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                       id: '${weather.cityName}-${DateTime.now().millisecondsSinceEpoch}',
                       cityName: weather.cityName,
                       country: weather.country,
-                      latitude: 0, // Note: We'd need coords from API
-                      longitude: 0, // This is a limitation of city search
+                      latitude: 51.5074,
+                      longitude: -0.1278,
                     );
 
                     Navigator.pushReplacement(
