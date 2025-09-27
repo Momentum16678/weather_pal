@@ -35,7 +35,7 @@ class DetailedWeatherPage extends ConsumerWidget {
             SliverAppBar(
               expandedHeight: 200.0,
               floating: false,
-              pinned: true,
+              pinned: false,
               stretch: true,
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(location.cityName),

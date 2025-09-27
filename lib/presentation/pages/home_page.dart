@@ -75,7 +75,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ],
               flexibleSpace: FlexibleSpaceBar(
-                title: const Text('Weather Forecast'),
+                title: Text('WeatherPal', style: TextStyle(fontWeight: FontWeight.w600,),),
                 background: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -99,6 +99,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(height: 10),
+
                       Row(
                         children: [
                           Icon(
