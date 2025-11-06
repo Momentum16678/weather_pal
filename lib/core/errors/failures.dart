@@ -1,4 +1,3 @@
-// lib/src/core/errors/failures.dart
 // Failures returned by repositories (clean architecture pattern)
 abstract class Failure {
   final String message;

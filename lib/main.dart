@@ -22,8 +22,8 @@ class WeatherForecastApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp(
-      title: 'Weather Forecast',
-      theme: AppTheme.lightTheme,      // From app_theme.dart
+      title: 'WeatherPal',
+      theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,   // From app_theme.dart
       themeMode: themeMode,            // Controlled by Riverpod
       home: const HomePage(),          // Starting page

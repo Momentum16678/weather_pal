@@ -1,8 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../domain/entities/forecast.dart';
 import '../../domain/entities/weather.dart';
-import 'weather_model.dart';  // Reuse Main, Wind, etc. from weather_model
-
+import 'weather_model.dart';
 part 'forecast_model.freezed.dart';
 part 'forecast_model.g.dart';
 

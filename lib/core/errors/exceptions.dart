@@ -1,4 +1,3 @@
-// lib/src/core/errors/exceptions.dart
 // Custom exceptions thrown by services
 class ServerException implements Exception {
   final String message;
