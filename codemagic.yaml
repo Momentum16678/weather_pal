@@ -1,0 +1,152 @@
+# Codemagic CI/CD Configuration for WeatherPal
+# Documentation: https://docs.codemagic.io/yaml-basic-configuration/yaml-getting-started/
+
+workflows:
+  # Android Build Workflow
+  weather-pal-android:
+    name: WeatherPal Android Build & Test
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+
+    environment:
+      # Flutter version
+      flutter: stable
+
+      # Java version for Android builds
+      java: 17
+
+      # Environment variables
+      vars:
+        # Add your OpenWeatherMap API key in Codemagic UI
+        # Settings → Environment variables → Add variable
+        WEATHER_API_KEY: $WEATHER_API_KEY
+
+      # Groups allow you to manage multiple environment variables together
+      # You can create these in Codemagic UI: Settings → Environment variable groups
+      # groups:
+      #   - production_keys
+
+    # Trigger configuration
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+        - pattern: 'develop'
+          include: true
+        - pattern: 'feature/*'
+          include: true
+      cancel_previous_builds: true
+
+    # Build scripts
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter --version
+          flutter pub get
+
+      - name: Analyze code
+        script: |
+          flutter analyze
+
+      - name: Check formatting
+        script: |
+          dart format --set-exit-if-changed .
+        ignore_failure: true  # Don't fail build on formatting issues
+
+      - name: Run unit tests
+        script: |
+          flutter test --coverage
+
+      # Optional: Widget tests
+      # - name: Run widget tests
+      #   script: |
+      #     flutter test test/widget_test
+
+      # Optional: Integration tests
+      # - name: Run integration tests
+      #   script: |
+      #     flutter test integration_test
+
+      - name: Build debug APK
+        script: |
+          flutter build apk --debug
+
+      - name: Build release APK
+        script: |
+          flutter build apk --release
+
+      # Optional: Build App Bundle for Play Store
+      # - name: Build App Bundle
+      #   script: |
+      #     flutter build appbundle --release
+
+    # Artifacts to keep after build
+    artifacts:
+      - build/**/outputs/**/*.apk
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - flutter_drive.log
+
+    # Publishing configuration
+    publishing:
+      # Email notifications
+      email:
+        recipients:
+          - fosas006@gmail.com  # Replace with your email
+        notify:
+          success: true      # Get notified on successful builds
+          failure: true      # Get notified on failed builds
+
+      # Optional: Slack notifications
+      # slack:
+      #   channel: '#builds'
+      #   notify_on_build_start: false
+      #   notify:
+      #     success: true
+      #     failure: true
+
+      # Optional: Firebase App Distribution
+      # firebase:
+      #   firebase_token: Encrypted(...)
+      #   android:
+      #     app_id: your-firebase-app-id
+      #     groups:
+      #       - testers
+
+      # Optional: Google Play Publishing
+      # google_play:
+      #   credentials: Encrypted(...)
+      #   track: internal  # or alpha, beta, production
+      #   submit_as_draft: true
+
+  # Optional: iOS Build Workflow (for future)
+  # weather-pal-ios:
+  #   name: WeatherPal iOS Build & Test
+  #   max_build_duration: 60
+  #   instance_type: mac_mini_m1
+  #
+  #   environment:
+  #     flutter: stable
+  #     xcode: latest
+  #     cocoapods: default
+  #
+  #   triggering:
+  #     events:
+  #       - push
+  #     branch_patterns:
+  #       - pattern: 'main'
+  #         include: true
+  #
+  #   scripts:
+  #     - name: Get Flutter packages
+  #       script: flutter pub get
+  #
+  #     - name: Build iOS
+  #       script: |
+  #         flutter build ios --release --no-codesign
+  #
+  #   artifacts:
+  #     - build/ios/ipa/*.ipa
